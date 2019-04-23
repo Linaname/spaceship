@@ -39,7 +39,11 @@ def draw(canvas):
         initial_state = random.randint(0, 30)
         star = animations.blink(canvas, row, column, symbol, initial_state)
         coroutines.append(star)
-    coroutines.append(animations.animate_spaceship(canvas, max_y//2-4, max_x//2-1))
+    coroutines.append(animations.animate_spaceship(
+        canvas,
+        max_y//2-4,
+        max_x//2-1,
+    ))
     while True:
         awaited_coroutines = set()
         for i, cor in enumerate(coroutines):
