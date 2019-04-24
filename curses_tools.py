@@ -75,3 +75,11 @@ def get_frame_size(text):
     rows = len(lines)
     columns = max([len(line) for line in lines])
     return rows, columns
+
+
+def get_max_frame_size(frames_list):
+    frame_heights = map(lambda frame: get_frame_size(frame)[0], frames_list)
+    frame_widths = map(lambda frame: get_frame_size(frame)[1], frames_list)
+    max_frame_height = max(frame_heights)
+    max_frame_width = max(frame_widths)
+    return max_frame_height, max_frame_width
