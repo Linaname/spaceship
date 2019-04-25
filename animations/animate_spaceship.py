@@ -11,19 +11,18 @@ DEFAULT_FRAME_FILENAMES = ('rocket_frame_1.txt', 'rocket_frame_2.txt')
 
 def load_frames(frame_filenames=DEFAULT_FRAME_FILENAMES,
                 frames_dir=DEFAULT_FRAMES_DIR):
-    global FRAMES_LIST
-    FRAMES_LIST = []
+    frames_list = []
     paths_list = [os.path.join(frames_dir, filename) for filename in
                   frame_filenames]
     for path in paths_list:
         with open(path, 'r') as f:
             frame = f.read()
-        FRAMES_LIST.append(frame)
+        frames_list.append(frame)
+    return frames_list
 
 
 async def animate_spaceship(canvas, row, column, border_width=1):
-    if not FRAMES_LIST:
-        load_frames()
+    frames_list = load_frames()
     canvas_height, canvas_width = canvas.getmaxyx()
     max_frame_height, max_frame_width = get_spaceship_size()
     min_row = border_width
@@ -31,7 +30,7 @@ async def animate_spaceship(canvas, row, column, border_width=1):
     max_row = canvas_height - max_frame_height - border_width
     max_column = canvas_width - max_frame_width - border_width
     previous_frame = ''
-    for frame in itertools.cycle(FRAMES_LIST):
+    for frame in itertools.cycle(frames_list):
         draw_frame(canvas, row, column, previous_frame, negative=True)
         d_row, d_column, _ = read_controls(canvas)
         new_row, new_column = row + d_row, column + d_column
@@ -45,6 +44,5 @@ async def animate_spaceship(canvas, row, column, border_width=1):
 
 
 def get_spaceship_size():
-    if not FRAMES_LIST:
-        load_frames()
-    return get_max_frame_size(FRAMES_LIST)
+    frames_list = load_frames()
+    return get_max_frame_size(frames_list)

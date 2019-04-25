@@ -30,16 +30,15 @@ def draw(canvas):
     coroutines.append(spaceship_coroutine)
     while True:
         exhausted_coroutines = set()
-        for i, cor in enumerate(coroutines):
+        for cor in coroutines:
             try:
                 cor.send(None)
             except StopIteration as e:
-                exhausted_coroutines.add(i)
+                exhausted_coroutines.add(cor)
         canvas.border()
         canvas.refresh()
-        n_coroutines = len(coroutines)
-        coroutines = [coroutines[i] for i in range(n_coroutines)
-                      if i not in exhausted_coroutines]
+        coroutines = [cor for cor in coroutines
+                      if cor not in exhausted_coroutines]
         time.sleep(TIC_TIMEOUT)
 
 
