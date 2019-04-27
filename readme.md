@@ -2,14 +2,17 @@
 
 ## Что это
 
-Анимированный корабль на фоне мигающих звездочек. Может управляться стрелочками на клавиатуре.
+Console game about space garbage. Works in linux text console.
 
-## Как запустить
+## How to run
 
 ```bash
 $ python main.py
 ```
 
-## Как выключить
-
-Ctrl+C
+## Controls
+```
+move: ← ↑ ↓ →
+shoot: space
+exit: Ctrl+C
+```

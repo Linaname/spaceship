@@ -53,22 +53,25 @@ def draw(canvas):
     info_subwin_size = (1, 62)
     message_template = 'Year: {} {:<50}'
     info_subwin = canvas.derwin(*info_subwin_size, border_width, border_width)
-    while True:
-        exhausted_coroutines = set()
-        for cor in config.COROUTINES:
-            try:
-                cor.send(None)
-            except StopIteration as e:
-                exhausted_coroutines.add(cor)
-        canvas.border()
-        year = int(config.YEAR)
-        message = message_template.format(year, PHRASES.get(year, ''))
-        info_subwin.addstr(0, 0, message)
-        canvas.refresh()
-        config.COROUTINES = [cor for cor in config.COROUTINES
-                             if cor not in exhausted_coroutines]
-        time.sleep(config.TIC_TIMEOUT)
-        config.YEAR += 1/config.TICS_PER_YEAR
+    try:
+        while True:
+            exhausted_coroutines = set()
+            for cor in config.COROUTINES:
+                try:
+                    cor.send(None)
+                except StopIteration as e:
+                    exhausted_coroutines.add(cor)
+            canvas.border()
+            year = int(config.YEAR)
+            message = message_template.format(year, PHRASES.get(year, ''))
+            info_subwin.addstr(0, 0, message)
+            canvas.refresh()
+            config.COROUTINES = [cor for cor in config.COROUTINES
+                                 if cor not in exhausted_coroutines]
+            time.sleep(config.TIC_TIMEOUT)
+            config.YEAR += 1/config.TICS_PER_YEAR
+    except KeyboardInterrupt:
+        exit()
 
 
 if __name__ == '__main__':
