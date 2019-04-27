@@ -1,6 +1,6 @@
 # Animate spaceship
 
-## Что это
+## What is it
 
 Console game about space garbage. Works in linux text console.
 
