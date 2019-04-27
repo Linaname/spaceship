@@ -88,10 +88,10 @@ def get_max_frame_size(frames_list):
     return max_frame_height, max_frame_width
 
 
-def load_frames(frame_filenames, frames_dir=DEFAULT_FRAMES_DIR):
+def load_frames(frames_dir):
+    filenames = os.listdir(frames_dir)
     frames_list = []
-    paths_list = [os.path.join(frames_dir, filename) for filename in
-                  frame_filenames]
+    paths_list = [os.path.join(frames_dir, filename) for filename in filenames]
     for path in paths_list:
         with open(path, 'r') as f:
             frame = f.read()
