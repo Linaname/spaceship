@@ -2,7 +2,7 @@
 
 ## What is it
 
-Console game about space garbage. Works in linux text console.
+Console game about space debris. Works in linux text console.
 
 ## How to run
 
