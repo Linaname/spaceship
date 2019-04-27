@@ -1,5 +1,4 @@
 from curses_tools import draw_frame, read_controls, get_max_frame_size, load_frames
-from curses_tools import DEFAULT_FRAMES_DIR
 import asyncio
 import itertools
 
