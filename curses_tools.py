@@ -1,8 +1,11 @@
+import os
+
 SPACE_KEY_CODE = 32
 LEFT_KEY_CODE = 260
 RIGHT_KEY_CODE = 261
 UP_KEY_CODE = 259
 DOWN_KEY_CODE = 258
+DEFAULT_FRAMES_DIR = 'frames'
 
 
 def read_controls(canvas):
@@ -83,3 +86,14 @@ def get_max_frame_size(frames_list):
     max_frame_height = max(frame_heights)
     max_frame_width = max(frame_widths)
     return max_frame_height, max_frame_width
+
+
+def load_frames(frame_filenames, frames_dir=DEFAULT_FRAMES_DIR):
+    frames_list = []
+    paths_list = [os.path.join(frames_dir, filename) for filename in
+                  frame_filenames]
+    for path in paths_list:
+        with open(path, 'r') as f:
+            frame = f.read()
+        frames_list.append(frame)
+    return frames_list

@@ -2,9 +2,12 @@ import time
 import curses
 import random
 import animations
-
+import curses_tools
 
 TIC_TIMEOUT = 0.1
+GARBAGE_FRAME_FILENAMES = ('duck.txt', 'hubble.txt', 'lamp.txt',
+                           'trash_large.txt', 'trash_small.txt',
+                           'trash_xl.txt')
 
 
 def draw(canvas):
@@ -22,6 +25,9 @@ def draw(canvas):
         initial_state = random.randint(0, 30)
         star = animations.blink(canvas, row, column, symbol, initial_state)
         coroutines.append(star)
+    garbage_frames = curses_tools.load_frames(GARBAGE_FRAME_FILENAMES)
+    garbage_coroutine = animations.fly_garbage(canvas, random.randint(0, max_x-1), random.choice(garbage_frames))
+    coroutines.append(garbage_coroutine)
     spaceship_coroutine = animations.animate_spaceship(
         canvas,
         (max_y - spaceship_height)//2,
