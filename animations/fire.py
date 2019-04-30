@@ -2,13 +2,11 @@ import asyncio
 import curses
 from .explosion import explode
 import config
+import game_state
 
 
 async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0):
     """Display animation of gun shot. Direction and speed can be specified."""
-
-    if config.YEAR < config.PLASMA_GUN_YEAR:
-        return
 
     row, column = start_row, start_column
 
@@ -30,10 +28,10 @@ async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0
     curses.beep()
 
     while 0 < row < max_row and 0 < column < max_column:
-        for obstacle in config.OBSTACLES:
+        for obstacle in game_state.obstacles:
             if obstacle.has_collision(row, column):
-                config.OBSTACLES_IN_LAST_COLLISIONS.append(obstacle)
-                config.COROUTINES.append(
+                game_state.obstacles_in_last_collisions.append(obstacle)
+                game_state.coroutines.append(
                     explode(canvas, row, column))
                 return
         canvas.addstr(round(row), round(column), symbol)

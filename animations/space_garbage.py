@@ -1,6 +1,6 @@
 from curses_tools import draw_frame, get_frame_size
 from obstacles import Obstacle
-import config
+import game_state
 import uuid
 import asyncio
 
@@ -17,11 +17,11 @@ async def fly_garbage(canvas, column, garbage_frame, speed=0.5):
     uid = uuid.uuid4()
     rows_size, columns_size = get_frame_size(garbage_frame)
     obstacle = Obstacle(row, column, rows_size, columns_size, uid)
-    config.OBSTACLES.append(obstacle)
+    game_state.obstacles.append(obstacle)
     try:
         while row < rows_number:
-            if obstacle in config.OBSTACLES_IN_LAST_COLLISIONS:
-                config.OBSTACLES_IN_LAST_COLLISIONS.remove(obstacle)
+            if obstacle in game_state.obstacles_in_last_collisions:
+                game_state.obstacles_in_last_collisions.remove(obstacle)
                 return
             draw_frame(canvas, row, column, garbage_frame)
             await asyncio.sleep(0)
@@ -29,4 +29,4 @@ async def fly_garbage(canvas, column, garbage_frame, speed=0.5):
             row += speed
             obstacle.row = row
     finally:
-        config.OBSTACLES.remove(obstacle)
+        game_state.obstacles.remove(obstacle)
